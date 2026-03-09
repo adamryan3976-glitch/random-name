@@ -10,66 +10,116 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="WPS Picker">
     
-    <!-- GitHub Image Assets - Corrected to .png and added cache busting -->
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=1">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=1">
+    <!-- GitHub Image Assets -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=2">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            background-color: #f3f4f6;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            touch-action: manipulation;
+        :root {
+            --knight-navy: #1a2a44;
+            --knight-gold: #c5a059;
+            --knight-crimson: #8b0000;
+            --knight-silver: #e5e7eb;
         }
+
+        body {
+            background-color: var(--knight-navy);
+            background-image: radial-gradient(circle at center, #2c3e50 0%, #1a2a44 100%);
+            font-family: 'Georgia', serif;
+            touch-action: manipulation;
+            color: white;
+        }
+
+        .knight-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 1.5rem;
+        }
+
         #wheel-container {
             position: relative;
             width: 85vw;
             max-width: 380px;
             aspect-ratio: 1;
-            margin: 15px auto;
+            margin: 20px auto;
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
         }
+
         #wheel {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 6px solid #ffffff;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            border: 8px solid var(--knight-gold);
             transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
         }
+
         #pointer {
             position: absolute;
-            top: -8px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 25px solid #ef4444;
-            z-index: 30;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 30px solid var(--knight-gold);
+            z-index: 40;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
-        /* Shield Hub Styles */
+
         #shield-hub {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 84px;
-            height: 84px;
-            background: #ffffff;
+            width: 90px;
+            height: 90px;
+            background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.6);
             z-index: 20;
-            border: 4px solid #ffffff;
+            border: 4px solid var(--knight-gold);
             overflow: hidden;
         }
+
         #shield-hub img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .gold-button {
+            background: linear-gradient(135deg, #d4af37 0%, #c5a059 100%);
+            color: var(--knight-navy);
+            text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+            box-shadow: 0 4px 0 #8e7035;
+            transition: all 0.1s;
+        }
+
+        .gold-button:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #8e7035;
+        }
+
+        .gold-button:disabled {
+            background: #4b5563;
+            box-shadow: none;
+            color: #9ca3af;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23c5a059' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         @supports (padding: env(safe-area-inset-top)) {
@@ -83,36 +133,34 @@
 <body class="flex flex-col min-h-screen">
 
     <div class="app-container p-4 max-w-lg mx-auto w-full flex-grow">
-        <header class="text-center mb-4 flex flex-col items-center">
-            <!-- App Logo - Corrected to .png -->
-            <img src="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=1" 
-                 alt="WPS Knights Logo" 
-                 class="w-24 h-24 rounded-2xl shadow-lg mb-2 object-cover border-2 border-white"
-                 onerror="this.src='https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Shield%20-%20No%20Text.jpg'">
-            <h1 class="text-2xl font-bold text-gray-800">WPS Class Picker</h1>
-            <p class="text-gray-500 text-xs uppercase tracking-widest font-semibold">Staff Tool 25-26</p>
+        <header class="text-center mb-6 flex flex-col items-center">
+            <div class="relative">
+                <div class="absolute inset-0 bg-gold-500 blur-lg opacity-20 rounded-full"></div>
+                <img src="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=2" 
+                     alt="WPS Knights Logo" 
+                     class="w-28 h-28 rounded-3xl shadow-2xl mb-3 object-cover border-4 border-gold-500/50 relative z-10"
+                     onerror="this.src='https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Shield%20-%20No%20Text.png?v=2'">
+            </div>
+            <h1 class="text-3xl font-black text-white tracking-tight uppercase italic" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5)">WPS Class Picker</h1>
+            <div class="h-1 w-24 bg-gradient-to-r from-transparent via-[#c5a059] to-transparent mt-1"></div>
+            <p class="text-[#c5a059] text-[10px] uppercase tracking-[0.3em] font-bold mt-2">Knight Order • Staff Tool 25-26</p>
         </header>
 
         <!-- Config Panel -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm mb-4 space-y-3">
-            <div id="controlsSection" class="space-y-3">
+        <div class="knight-card p-5 mb-6">
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Select Teacher</label>
-                    <div class="relative">
-                        <select id="teacherSelect" class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none appearance-none font-medium text-gray-700">
-                            <option value="">Loading students...</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-400">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
-                        </div>
-                    </div>
+                    <label class="block text-[10px] font-bold text-[#c5a059] uppercase tracking-widest mb-2">Assigning Officer (Teacher)</label>
+                    <select id="teacherSelect" class="w-full p-3 bg-black/30 border border-[#c5a059]/30 rounded-xl outline-none font-bold text-white">
+                        <option value="">Summoning classes...</option>
+                    </select>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-700 text-sm font-medium">Remove student after spin</span>
+                <div class="flex items-center justify-between pt-2">
+                    <span class="text-gray-300 text-sm font-medium">Banish chosen from wheel</span>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="removeToggle" class="sr-only peer">
-                        <div class="w-10 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                        <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#c5a059]"></div>
                     </label>
                 </div>
             </div>
@@ -122,30 +170,29 @@
         <div id="wheel-container">
             <div id="pointer"></div>
             <canvas id="wheel"></canvas>
-            <!-- Shield Hub -->
             <div id="shield-hub">
-                <img src="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Shield%20-%20No%20Text.jpg" 
+                <img src="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Shield%20-%20No%20Text.png?v=2" 
                      alt="WPS Shield">
             </div>
         </div>
 
         <!-- Result Display -->
-        <div class="text-center h-16 mt-2 flex items-center justify-center">
-            <h2 id="winnerName" class="text-2xl font-black text-blue-700 uppercase tracking-tight"></h2>
+        <div class="text-center h-20 mt-4 flex items-center justify-center">
+            <h2 id="winnerName" class="text-4xl font-black text-white uppercase italic tracking-tighter" style="text-shadow: 0 0 15px rgba(197, 160, 89, 0.8)"></h2>
         </div>
 
         <!-- Main Actions -->
-        <div class="grid grid-cols-2 gap-3 mt-2">
-            <button id="spinBtn" disabled class="bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition disabled:bg-gray-300 disabled:shadow-none">
-                SPIN
+        <div class="grid grid-cols-2 gap-4 mt-2 pb-8">
+            <button id="spinBtn" disabled class="gold-button text-lg font-black py-5 rounded-2xl tracking-widest">
+                SPIN WHEEL
             </button>
-            <button id="resetBtn" class="bg-gray-200 text-gray-700 font-bold py-4 rounded-2xl active:scale-95 transition">
-                RESET
+            <button id="resetBtn" class="bg-white/10 text-[#c5a059] border border-[#c5a059]/30 font-bold py-5 rounded-2xl active:bg-white/20 transition">
+                RESET LIST
             </button>
         </div>
         
-        <div class="mt-4 text-center">
-            <p id="countDisplay" class="text-gray-400 text-xs font-medium"></p>
+        <div class="text-center opacity-60">
+            <p id="countDisplay" class="text-[#c5a059] text-[10px] font-bold tracking-[0.2em]"></p>
         </div>
     </div>
 
@@ -157,30 +204,33 @@
         let rotation = 0;
         const canvas = document.getElementById('wheel');
         const ctx = canvas.getContext('2d');
-        const colors = ['#2563eb', '#059669', '#d97706', '#dc2626', '#7c3aed', '#db2777', '#0891b2', '#4b5563'];
+        
+        const colors = [
+            '#1a2a44', // Navy
+            '#8b0000', // Crimson
+            '#c5a059', // Gold
+            '#2d3436', // Dark Metal
+            '#4a1c1c', // Deep Burgundy
+            '#0f172a', // Deep Navy
+            '#b45309', // Darker Gold/Amber
+            '#7f1d1d'  // Dark Red
+        ];
 
         async function loadData() {
             try {
-                document.getElementById('teacherSelect').innerHTML = '<option value="">Loading students...</option>';
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
-
-                if (data.error) {
-                    document.getElementById('teacherSelect').innerHTML = `<option value="">${data.error}</option>`;
-                    return;
-                }
-
+                if (data.error) return;
                 allStudents = data.students;
                 populateTeachers(data.teachers);
             } catch (err) {
                 console.error(err);
-                document.getElementById('teacherSelect').innerHTML = '<option value="">Connection Error</option>';
             }
         }
 
         function populateTeachers(teachers) {
             const select = document.getElementById('teacherSelect');
-            select.innerHTML = '<option value="">Choose a Class...</option>';
+            select.innerHTML = '<option value="">Select a Class...</option>';
             teachers.forEach(t => {
                 const opt = document.createElement('option');
                 opt.value = t;
@@ -190,12 +240,12 @@
         }
 
         function updateWheel() {
-            const size = 800;
+            const size = 1000;
             canvas.width = size;
             canvas.height = size;
             
             if (currentClassList.length === 0) {
-                ctx.fillStyle = "#f3f4f6";
+                ctx.fillStyle = "rgba(255,255,255,0.05)";
                 ctx.beginPath();
                 ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
                 ctx.fill();
@@ -212,16 +262,22 @@
                 ctx.moveTo(size/2, size/2);
                 ctx.arc(size/2, size/2, size/2, i * arcSize, (i + 1) * arcSize);
                 ctx.fill();
+                
+                ctx.strokeStyle = "rgba(197, 160, 89, 0.4)";
+                ctx.lineWidth = 2;
+                ctx.stroke();
 
                 ctx.save();
                 ctx.translate(size/2, size/2);
                 ctx.rotate(i * arcSize + arcSize / 2);
                 ctx.textAlign = "right";
                 ctx.fillStyle = "white";
-                ctx.font = "bold 26px sans-serif";
+                ctx.shadowColor = "black";
+                ctx.shadowBlur = 4;
                 
+                ctx.font = "bold 32px Georgia, serif";
                 let displayName = student.Name || "Student";
-                ctx.fillText(displayName, size/2 - 40, 10);
+                ctx.fillText(displayName, size/2 - 60, 12);
                 ctx.restore();
             });
         }
@@ -232,9 +288,10 @@
             const spinBtn = document.getElementById('spinBtn');
             const winnerDisplay = document.getElementById('winnerName');
             spinBtn.disabled = true;
-            winnerDisplay.textContent = "PICKING...";
+            winnerDisplay.textContent = "CONSULTING FATE...";
+            winnerDisplay.style.opacity = "0.5";
 
-            const extraSpins = 7 + Math.random() * 5;
+            const extraSpins = 8 + Math.random() * 5;
             rotation += extraSpins * 360;
             
             canvas.style.transform = `rotate(${rotation}deg)`;
@@ -247,13 +304,14 @@
                 const winner = currentClassList[winnerIndex];
 
                 winnerDisplay.textContent = winner.Name;
+                winnerDisplay.style.opacity = "1";
                 
                 if (document.getElementById('removeToggle').checked) {
                     currentClassList.splice(winnerIndex, 1);
                     setTimeout(() => {
                         updateWheel();
                         updateCount();
-                    }, 1200);
+                    }, 1500);
                 }
                 
                 spinBtn.disabled = false;
@@ -261,7 +319,7 @@
         }
 
         function updateCount() {
-            document.getElementById('countDisplay').textContent = `${currentClassList.length} STUDENTS LEFT`;
+            document.getElementById('countDisplay').textContent = `${currentClassList.length} KNIGHTS REMAINING`;
         }
 
         document.getElementById('teacherSelect').addEventListener('change', (e) => {
@@ -289,7 +347,6 @@
         });
 
         loadData();
-        updateWheel();
     </script>
 </body>
 </html>
