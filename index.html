@@ -10,10 +10,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="WPS Picker">
     
-    <!-- GitHub Image Assets -->
-    <!-- Using the raw.githubusercontent.com URL for direct image access -->
-    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.jpg">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.jpg">
+    <!-- GitHub Image Assets - Corrected to .png and added cache busting -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=1">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=1">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -47,8 +46,32 @@
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
             border-top: 25px solid #ef4444;
-            z-index: 20;
+            z-index: 30;
         }
+        /* Shield Hub Styles */
+        #shield-hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 84px;
+            height: 84px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 20;
+            border: 4px solid #ffffff;
+            overflow: hidden;
+        }
+        #shield-hub img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         @supports (padding: env(safe-area-inset-top)) {
             .app-container {
                 padding-top: env(safe-area-inset-top);
@@ -61,11 +84,11 @@
 
     <div class="app-container p-4 max-w-lg mx-auto w-full flex-grow">
         <header class="text-center mb-4 flex flex-col items-center">
-            <!-- App Logo -->
-            <img src="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.jpg" 
+            <!-- App Logo - Corrected to .png -->
+            <img src="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Knight%20Wheel.png?v=1" 
                  alt="WPS Knights Logo" 
                  class="w-24 h-24 rounded-2xl shadow-lg mb-2 object-cover border-2 border-white"
-                 onerror="this.style.display='none'">
+                 onerror="this.src='https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Shield%20-%20No%20Text.jpg'">
             <h1 class="text-2xl font-bold text-gray-800">WPS Class Picker</h1>
             <p class="text-gray-500 text-xs uppercase tracking-widest font-semibold">Staff Tool 25-26</p>
         </header>
@@ -99,8 +122,10 @@
         <div id="wheel-container">
             <div id="pointer"></div>
             <canvas id="wheel"></canvas>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg z-10 flex items-center justify-center border-4 border-gray-50">
-                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <!-- Shield Hub -->
+            <div id="shield-hub">
+                <img src="https://raw.githubusercontent.com/adamryan3976-glitch/random-name/main/Shield%20-%20No%20Text.jpg" 
+                     alt="WPS Shield">
             </div>
         </div>
 
