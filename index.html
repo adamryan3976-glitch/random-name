@@ -137,6 +137,16 @@
 <body class="flex flex-col min-h-screen">
 
     <div class="app-container p-4 max-w-lg mx-auto w-full flex-grow">
+        <!-- Back Button to Hub -->
+        <div class="mb-4">
+            <a href="https://winchesterps.ca/" class="inline-flex items-center gap-1 py-1.5 px-2 bg-white/10 border border-white/20 rounded-lg text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-sm" title="Back to Landing Page">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span class="text-[9px] font-black tracking-tighter uppercase">Back to Hub</span>
+            </a>
+        </div>
+
         <header class="text-center mb-6 flex flex-col items-center">
             <div class="relative">
                 <div class="absolute inset-0 bg-gold-500 blur-lg opacity-20 rounded-full"></div>
@@ -331,12 +341,10 @@
               }
 
               const particleCount = 50 * (timeLeft / duration);
-              // Confetti
               confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
               confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
             }, 250);
 
-            // Fireworks burst
             confetti({
                 particleCount: 150,
                 spread: 70,
@@ -364,7 +372,6 @@
             
             canvas.style.transform = `rotate(${rotation}deg)`;
 
-            // --- Tick sound simulation ---
             const segmentAngle = 360 / currentClassList.length;
             let lastTickAngle = startRotation % 360;
             const startTime = performance.now();
@@ -373,14 +380,13 @@
                 const elapsed = time - startTime;
                 if (elapsed >= spinDuration) return;
 
-                // Cubic-bezier approximation for the click timing
                 const progress = elapsed / spinDuration;
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 const currentAngle = (startRotation + (totalRotation * easeOut)) % 360;
                 
                 const diff = Math.abs(currentAngle - lastTickAngle);
                 if (diff >= segmentAngle) {
-                    playClickSound(1 - progress); // Click gets quieter as it slows
+                    playClickSound(1 - progress);
                     lastTickAngle = currentAngle;
                 }
                 requestAnimationFrame(checkTick);
